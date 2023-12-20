@@ -13,7 +13,7 @@ export default function FindEventSection() {
     // 검색 버튼이 눌렸을때만 query를 전달하게 useRef가 아닌 useState사용
     queryKey: ["events", { search: searchTerm }],
     // 매개변수로 searchElement 전달
-    queryFn: ({ signal }) => fetchEvents({ signal, searchTerm }),
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     //검색어가 입력되기전까지 검색하지않게 쿼리를 비활성화
     enabled: searchTerm !== undefined,
   });

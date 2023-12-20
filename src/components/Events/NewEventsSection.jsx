@@ -7,8 +7,9 @@ import { fetchEvents } from "../../util/http.js";
 export default function NewEventsSection() {
   //tanstack query http 요청은 직접 작성해야함
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
+    queryKey: ["events", { max: 3 }],
+    // 3개만 보여줄경우 max 3으로 설정
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     // 예를들어 5000으로 설정하면 5초안에 fetch를 요청했을때 데이터를 다시 요청하지않음
     staleTime: 5000,
   });
